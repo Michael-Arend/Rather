@@ -13,7 +13,7 @@ const AnsweredPollCard = ({ question }) => {
     <div
       className="pollcard-wrapper"
       style={{ cursor: "pointer" }}
-      onClick={() => navigate("/Home/" + question.id)}
+      onClick={() => navigate("/questions/" + question.id)}
     >
       <div className="pollcard-header">
         <h4>{author !== undefined && author.name} asked: Would you rather?</h4>

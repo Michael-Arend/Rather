@@ -8,11 +8,12 @@ const Home = () => {
 
   return (
     <div>
-      {location.pathname.toLocaleLowerCase() === "/home/unanswered" ||
-      location.pathname.toLocaleLowerCase() === "/home/answered" ? (
+      {location.pathname.toLocaleLowerCase() === "/questions/unanswered" ||
+      location.pathname.toLocaleLowerCase() === "/questions/answered" ||
+      location.pathname.toLocaleLowerCase() === "/questions" ? (
         <div>
           <div className="tab-header">
-            <Link to="/home/unanswered">
+            <Link to="/questions/unanswered">
               <div
                 className={
                   location.pathname.includes("/unanswered")
@@ -23,7 +24,7 @@ const Home = () => {
                 <p>Unanswered Questions</p>
               </div>
             </Link>
-            <Link className="" to="/home/answered">
+            <Link className="" to="/questions/answered">
               <div
                 className={
                   location.pathname.includes("/answered")

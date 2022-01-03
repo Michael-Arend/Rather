@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { hash, compare } from "../Helper/PasswordHelper";
 import { registerUser } from "../Store/UserStore/userReducer";
+import { useLocation } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,9 @@ const Login = () => {
   const passwordLogin = useRef();
 
   const navigate = useNavigate();
+
+  const { state } = useLocation();
+
   const users = useSelector((state) => state.users.users);
   const [isRegisterShown, setIsRegisterShown] = useState(false);
   const [errorList, setErrorList] = useState([]);
@@ -30,7 +34,7 @@ const Login = () => {
     }
 
     dispatch({ type: "LOGIN_USER", authUser: select.current.value });
-    navigate("/Home/unanswered");
+    navigate(state?.path || "/questions/unanswered");
   };
 
   const HandleRegister = (event) => {
@@ -53,6 +57,7 @@ const Login = () => {
     }
 
     if (errorList.length > 0) return;
+    console.log(errorList.length);
 
     const passwordHash = hash(password.current.value);
     dispatch(
@@ -62,8 +67,7 @@ const Login = () => {
         password: passwordHash,
       })
     );
-
-    navigate("/Home/unanswered");
+    navigate(state?.path || "/questions/unanswered");
   };
 
   return (

@@ -21,7 +21,7 @@ const NavBar = () => {
             : "nav-item"
         }
       >
-        <Link to="/home/unanswered">Home</Link>
+        <Link to="/questions/unanswered">Questions</Link>
       </div>
 
       <div

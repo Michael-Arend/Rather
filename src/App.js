@@ -1,15 +1,18 @@
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./Components/NavBar";
+
 import Home from "./Pages/Home";
 import NewQuestion from "./Pages/NewQuestion";
 import Leaderboard from "./Pages/Leaderboard";
 import { LoadingBar } from "react-redux-loading-bar";
 import "./App.css";
-import { useEffect } from "react";
+import { Component, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { _getUsers, _getQuestions } from "./_DATA";
 import { userObjInArray, questionObjInArray } from "./Helper/Converter";
 import Login from "./Pages/Login";
+import NotFound from "./Components/NotFound";
+import NavBar from "./Components/NavBar";
+import RequireAuth from "./Components/RequireAuth";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,21 +33,38 @@ function App() {
   return (
     <div>
       <LoadingBar style={{ backgroundColor: "blue", height: "5px" }} />
-      {authUser !== "" && <Navbar />}
-      {authUser !== "" ? (
-        <div className="main-container">
-          <Routes>
-            <Route path="/*" element={<Home />} />
-            <Route path="/:id/*" element={<Home />} />
-            <Route path="/add" element={<NewQuestion />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-          </Routes>
-        </div>
-      ) : (
-        <div className="main-container">
-          <Login />
-        </div>
-      )}
+      <NavBar />
+      <div className="main-container">
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/questions/*"
+            element={
+              <RequireAuth>
+                <Home />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/add"
+            element={
+              <RequireAuth>
+                <NewQuestion />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/leaderboard"
+            element={
+              <RequireAuth>
+                <Leaderboard />
+              </RequireAuth>
+            }
+          />
+        </Routes>
+      </div>
+      )
     </div>
   );
 }

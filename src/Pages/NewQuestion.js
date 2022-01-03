@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState, useEffect } from "react";
 import { createNewQuestion } from "../Store/QuestionStore/questionReducer";
+import { useNavigate } from "react-router-dom";
 
 const NewQuestion = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const option1 = useRef();
   const option2 = useRef();
   const ismounted = useRef(false);
@@ -45,8 +47,10 @@ const NewQuestion = () => {
     };
     try {
       dispatch(createNewQuestion(newQuestion));
-      ismounted.current &&
+      if (ismounted.current) {
         showMessage("Successfully created a new question.", true);
+        navigate("/questions/unanswered");
+      }
     } catch (e) {
       ismounted.current &&
         showMessage("Something went wrong, try again, please.", false);
